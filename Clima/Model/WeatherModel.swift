@@ -3,7 +3,7 @@
 //  Clima
 //
 //  Created by Yashwant Sheshkar on 21/06/24.
-//  Copyright © 2024 App Brewery. All rights reserved.
+
 //
 
 import Foundation
