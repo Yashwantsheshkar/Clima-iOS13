@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreLocation
 
-class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManagerDelegate {
+class WeatherViewController: UIViewController {
 
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -16,22 +17,30 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
     @IBOutlet weak var searchTextField: UITextField!
     
     var weatherManager = WeatherManager()
+    let locationManager = CLLocationManager()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager.requestWhenInUseAuthorization()
+        
         searchTextField.delegate = self
         weatherManager.delegate = self
-        
     }
+}
 
+
+//MARK: - UITextFieldDelegate
+
+extension WeatherViewController: UITextFieldDelegate{
+    
     @IBAction func searchPressed(_ sender: UIButton) {
         
         
 //        print(searchTextField.text!)
         searchTextField.endEditing(true)
-        
-        
-        
+       
     }
     
 /* we are using the below func as if we have created the ib
@@ -66,7 +75,12 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
         
         searchTextField.text = ""
     }
-    
+}
+
+//MARK: - WeatherManagerDelegate
+
+extension WeatherViewController: WeatherManagerDelegate{
+  
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel){
         
         DispatchQueue.main.async {
@@ -79,6 +93,4 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
     func didFailWithError(error: any Error) {
         print(error)
     }
-    
 }
-
